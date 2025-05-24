@@ -1,0 +1,98 @@
+:root {
+    --paper-background: rgb(161, 131, 192);
+    --paper-text-color: rgb(58, 49, 70);
+}
+
+#app {
+    display: flex;
+    flex-direction: row;
+    font-family: monospace;
+    width: 100%;
+    height:100%;
+    left: 0;
+    top: 0;
+    position:absolute;
+    overflow: hidden;
+}
+
+#main, #paper-tape-wrapper {
+    height: 100%;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: var(--paper-text-color);
+    color: var(--paper-background);
+    text-align: center;
+    overflow: hidden;
+    flex-grow: 1;
+}
+
+#output-wrapper {
+    width: 100%;
+    overflow: scroll;
+    display:flex;
+    flex-direction: row;
+    scrollbar-width: none;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.output-wrapper {
+    width: fit-content;
+    display: flex;
+    flex-direction: column-reverse;
+    margin-right: 1em;
+}
+
+.output-wrapper > pre {
+    margin-top: 0;
+    margin-bottom: 0;
+    white-space: preserve-spaces;
+    text-wrap: nowrap;
+}
+
+#paper-tape-wrapper {
+    background-color: var(--paper-background);
+    color: var(--paper-text-color);
+    width:fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+#paper-tape {
+    overflow: scroll;
+    scrollbar-width: none;
+}
+
+#paper-tape-wrapper > pre {
+    background-color: var(--paper-text-color);
+    color: var(--paper-background);
+    margin:0;
+    user-select: none;
+}
+
+#paper-tape-tape > pre {
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    width: 50%;
+    position: relative;
+}
+
+#editor-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+}
+
+#text-editor,#reference-text {
+    height: 100%;
+    flex-grow: 1;
+    outline: solid var(--paper-background);
+    max-width: 60%;
+}
