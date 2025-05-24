@@ -3,14 +3,31 @@ import {
 } from "./steno-keys.js";
 
 import { StenoDictionary } from "./steno-dictionary.js";
+import { StenoPractice } from "./steno-practice.js";
 
 //import { DICT } from "./config/config.js";
+import { 
+    makeQueryParams,
+    parseParams, 
+} from "./url-options.js";
+
+const currentURL = window.location.search;
+const params = parseParams(currentURL);
+if (!('theory' in params)) params.theory = ['plover'];
+
+const keys = new Keys(Keys[params.theory[0]]);
+
+console.log(makeQueryParams({
+    theory: ['lapwing'],
+    exercise: [...StenoPractice.TOP],
+}));
 
 const DICT = new StenoDictionary();
-DICT.fetchDictionary("https://github.com/openstenoproject/plover/blob/main/plover/assets/commands.json");
+for (const key of Object.keys(StenoDictionary[params.theory[0]])) {
+    DICT.fetchDictionary(StenoDictionary[params.theory[0]][key]);
+}
 
-const keys = new Keys();
-
+// checkmark U+2713 (✓) U+2714 (✔)
 function outputBlock (...args) {
     const wrapper = document.createElement('div');
     wrapper.classList.add('output-wrapper');
@@ -31,6 +48,13 @@ function paperTapePrint (paperTapeOutput) {
     paper.append(prePaper);
     paper.parentElement.scrollTop = paper.scrollHeight;
 }
+
+function practice (items) {
+    const practiceDisplay = document.querySelector('#reference-text');
+    practiceDisplay.append(StenoPractice.makePracticeText(items));
+}
+
+practice(params.exercise);
 
 
 

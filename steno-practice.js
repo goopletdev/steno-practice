@@ -16,6 +16,28 @@ export class StenoPractice {
         return practiceArray;
     }
 
+    static makePracticeText (practiceItems=StenoPractice.LETTERS, length=100, randomize=true) {
+        return StenoPractice.makePracticeArray(...arguments).join(' ');
+    }
+
+    static join (...practiceLists) {
+
+    }
+
+    /**
+     * 
+     * @param  {...Array} practiceLists 
+     * @returns 
+     */
+    static same (...practiceLists) {
+        return practiceLists[0].filter(v => {
+            for (const list of practiceLists.slice(1))  {
+                if (!list.includes(v)) return false;
+            }
+            return true;
+        });
+    }
+
     static ALL = ["S","T","K","P","W","H","R","A","O","*","E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
     static LETTERS = ["S","T","K","P","W","H","R","A","O","E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
 
