@@ -1,12 +1,3 @@
-const STENOKEYS = ["S","T","K","P","W","H","R","A","O","*","E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
-const STENOLETTERS = ["S","T","K","P","W","H","R","A","O","E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
-
-const TOPROW = ["T","P","H",'-F','-P','-L','-T','-D',]
-const BOTTOMROW = ['S','K','W','R','-R','-B','-G','-S','-Z',];
-const VOWELS = ['A','O','E','U'];
-const LEFTHAND = ["S","T","K","P","W","H","R","A","O",];
-const RIGHTHAND = ["E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
-
 class Chord {
     static STENORDER = "STKPWHRAO*EUFRPBLGTSDZ";
 

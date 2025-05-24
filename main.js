@@ -7,6 +7,7 @@ import { StenoDictionary } from "./steno-dictionary.js";
 //import { DICT } from "./config/config.js";
 
 const DICT = new StenoDictionary();
+DICT.fetchDictionary("https://github.com/openstenoproject/plover/blob/main/plover/assets/commands.json");
 
 const keys = new Keys();
 
@@ -26,7 +27,7 @@ function outputBlock (...args) {
 function paperTapePrint (paperTapeOutput) {
     const prePaper = document.createElement('pre');
     prePaper.textContent = paperTapeOutput;
-    const paper = document.querySelector('#paper-tape-tape')
+    const paper = document.querySelector('#paper-tape-entries')
     paper.append(prePaper);
     paper.parentElement.scrollTop = paper.scrollHeight;
 }
