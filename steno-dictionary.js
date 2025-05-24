@@ -15,7 +15,7 @@ export class StenoDictionary {
             }
       
             const json = await response.json();
-            console.log(json);
+            //console.log(json);
             this.add(json);
         } catch (error) {
             console.error(error.message);
