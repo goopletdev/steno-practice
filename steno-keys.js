@@ -1,71 +1,50 @@
-export class Chord {
+const STENOKEYS = ["S","T","K","P","W","H","R","A","O","*","E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
+const STENOLETTERS = ["S","T","K","P","W","H","R","A","O","E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
+
+const TOPROW = ["T","P","H",'-F','-P','-L','-T','-D',]
+const BOTTOMROW = ['S','K','W','R','-R','-B','-G','-S','-Z',];
+const VOWELS = ['A','O','E','U'];
+const LEFTHAND = ["S","T","K","P","W","H","R","A","O",];
+const RIGHTHAND = ["E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
+
+class Chord {
     static STENORDER = "STKPWHRAO*EUFRPBLGTSDZ";
-    static STENOKEYS = ["S","T","K","P","W","H","R","A","O","*","E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
-    static TOPROW = ["T","P","H",'-F','-P','-L','-T','-D',]
-    static BOTTOMROW = ['S','K','W','R','-R','-B','-G','-S','-Z',];
-    static VOWELS = ['A','O','E','U'];
-    static LEFTHAND = ["S","T","K","P","W","H","R","A","O",];
-    static RIGHTHAND = ["E","U","-F","-R","-P","-B","-L","-G","-T","-S","-D","-Z",];
 
-    keys = new Array(22).fill(false);
-    constructor () {};
+    #papertape = new Array(22).fill(' ');
+    #rawOutput = new Array(22);
 
-    tape (raw = true) {
-        return raw ? this.raw() : this.paper();
-    }
-
-    clear (raw = true) {
-        const tape = this.tape(raw);
-        this.keys.fill(false);
-        return tape;
-    }
-
-    add (k) {
-        const key = Chord.STENOKEYS.indexOf(k)
-        if (key > -1) return this.keys[key] = true;
-        return false;
-    }
-
-    raw () {
-        const output = [];
-        let separator = '-';
-
-        for (let i = 0; i < 12; i++) {
-            if (this.keys[i]) {
-                output.push(Chord.STENORDER[i]);
-                if (i >= 7) separator = '';
-            }
+    constructor (keys) {
+        let separator = '';
+        for (const key of keys) {
+            this.#papertape[key] = Chord.STENORDER[key];
+            this.#rawOutput[key] = Chord.STENORDER[key];
+            if (key > 11) separator = '-';
         }
-
-        if (separator && this.keys.slice(12).reduce((prev,curr) => prev + curr)) {
-            output.push(separator);
+        if ((new Set([7,8,9,10,11])).isDisjointFrom(keys)) {
+            this.#rawOutput[9] = separator;
         }
-
-        for (let i = 12; i < Chord.STENORDER.length; i++) {
-            if (this.keys[i]) output.push(Chord.STENORDER[i]);
-        }
-
-        return output.join('');
     }
 
-    paper () {
-        return this.keys.map((k, i) => k ? Chord.STENORDER[i] : " ").join('');
+    get raw () {
+        return this.#rawOutput.join('');
+    }
+
+    get paper () {
+        return this.#papertape.join('');
     }
 }
 
 export class Keys {
     down = new Set();
-    chord = new Chord();
+    chord = new Set();
     #ignoreChord = false;
-    raw = true;
+    #keyMap
 
-    constructor () {}
-
-    get ignoreChord () {
-        return this.#ignoreChord;
+    constructor (keyMap = Keys.keyIndexes) {
+        this.#keyMap = keyMap;
     }
 
-    set ignoreChord (bool) {
+    #setIgnoreChord (bool) {
         this.#ignoreChord = bool;
         this.chord.clear();
     }
@@ -76,10 +55,10 @@ export class Keys {
      */
     keydown (e) {
         this.down.add(e.code);
-        if (e.code in Keys.keyMap && !this.ignoreChord) {
+        if (e.code in Keys.keyIndexes && !this.#ignoreChord) {
             e.preventDefault();
-            this.chord.add(Keys.keyMap[e.code]);
-        } else this.ignoreChord = true;
+            this.chord.add(this.#keyMap[e.code]);
+        } else this.#setIgnoreChord(true);
     }
 
     /**
@@ -90,14 +69,15 @@ export class Keys {
     keyup (e) {
         this.down.delete(e.code);
         if (!this.down.size) {
-            if (this.ignoreChord) this.ignoreChord = false;
+            if (this.#ignoreChord) this.#setIgnoreChord(false);
             else return this.send();
         }
     }
 
     send () {
-        if (typeof this.raw === 'boolean') return this.chord.clear(this.raw);
-        return [this.chord.paper(), this.chord.clear()];
+        let oldChord = new Chord(this.chord);
+        this.chord = new Set();
+        return oldChord;
     }
 
     static keyMap = {

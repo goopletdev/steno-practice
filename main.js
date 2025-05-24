@@ -1,12 +1,14 @@
 import {
     Keys,
-    Chord,
 } from "./steno-keys.js";
 
-import { DICT } from "./config/config.js";
+import { StenoDictionary } from "./steno-dictionary.js";
+
+//import { DICT } from "./config/config.js";
+
+const DICT = new StenoDictionary();
 
 const keys = new Keys();
-keys.raw = 'quantum';
 
 function outputBlock (...args) {
     const wrapper = document.createElement('div');
@@ -21,19 +23,12 @@ function outputBlock (...args) {
     return wrapper;
 }
 
-function deleteLastChord (outputElements) {
-    return outputElements.removeChild(outputElements.lastChild).lastChild.textContent;
-}
-
-function literalText (translation) {
-    if (!translation) return;
-    let exec;
-    if (exec = /\{(.*)\}/s.exec(translation)) {
-        if (/^\^[^\^]*$/.test(exec[1])) return exec[1].slice(1);
-        return exec[1];
-    } else {
-        return ' ' + translation;
-    }
+function paperTapePrint (paperTapeOutput) {
+    const prePaper = document.createElement('pre');
+    prePaper.textContent = paperTapeOutput;
+    const paper = document.querySelector('#paper-tape-tape')
+    paper.append(prePaper);
+    paper.parentElement.scrollTop = paper.scrollHeight;
 }
 
 
@@ -47,23 +42,18 @@ document.addEventListener('keyup', (e) => {
     const chord = keys.keyup(e);
     if (!chord) return;
 
-    const prePaper = document.createElement('pre');
-    prePaper.textContent = chord[0];
-    const paper = document.querySelector('#paper-tape-tape')
-    paper.append(prePaper);
-    paper.parentElement.scrollTop = paper.scrollHeight;
+    paperTapePrint(chord.paper);
 
     const outputBlocks = document.querySelector('#output-wrapper');
     const editor = document.querySelector('#text-editor');
-    if (chord[1] === '*') {
-        let text = literalText(deleteLastChord(outputBlocks));
-        //if (text) editor.removeChild(editor.lastChild);
+    if (chord.raw === '*') {
+        outputBlocks.removeChild(outputBlocks.lastChild);
         editor.removeChild(editor.lastChild);
     } else {
-        const output = outputBlock(chord[1],DICT[chord[1]]);
+        const output = outputBlock(chord.raw,DICT[chord.raw]);
         outputBlocks.append(output);
         outputBlocks.scrollLeft = outputBlocks.scrollWidth;
-        editor.append(` ${chord[1]}`);
-        //if (DICT[chord[1]]) editor.append(literalText(DICT[chord[1]]));
+        editor.append(` ${chord.raw}`);
+        //if (DICT[chord.raw]) editor.append(literalText(DICT[chord.raw]));
     }
 });
