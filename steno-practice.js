@@ -1,3 +1,14 @@
+function practiceBlock (practiceText) {
+    const block = document.createElement('div');
+    block.style.display = 'flex';
+    block.style.flexDirection = 'column';
+    block.style.width = 'fit-content';
+    const text = document.createElement('pre');
+    text.textContent = practiceText;
+    block.append(text);
+}
+
+
 export class StenoPractice {
     static makePracticeArray (practiceItems=StenoPractice.LETTERS, length=100, randomize=true) {
         const practiceArray = [];

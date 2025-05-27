@@ -2,19 +2,15 @@
 <html>
     <head>
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="../../style.css">
+        <script type="module" src="../../paper-tape/paper-tape.js"></script>
+
     </head>
     <body>
         <div id="app" class="standard">
-            <div id="paper-tape-wrapper">
-                <pre id="paper-tape-title">STKPWHRAO*EUFRPBLGTSDZ</pre>
-                <div id="paper-tape" class="inverted">
-                    <div id="paper-tape-entries"></div>
-                </div>
-            </div>
+            <div is="paper-tape"></div>
 
             <div id="main">
-                <!--img src="./lazy-keyboard.png"-->
                 <div id="output-wrapper"></div>
                 <div id="editor-wrapper">
                     <div id="text-editor"></div>
@@ -22,8 +18,8 @@
                 </div>
             </div>
         </div>
+        <script type="module" src="./raw-practice-main.js"></script>
 
-        <script type="module" src="./main.js"></script>
 
     </body>
 </html>
