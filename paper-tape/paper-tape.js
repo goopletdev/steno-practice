@@ -5,7 +5,7 @@ export class PaperTape extends HTMLDivElement {
     tape = document.createElement('div');
     entries = document.createElement('div');
 
-    constructor (stenorder = 'STKPWHRAO*EUFRPBLGTSDZ') {
+    constructor (stenorder = '#STKPWHRAO*EUFRPBLGTSDZ') {
         super();
         this.title.style.margin = '0';
         this.title.style.padding = '0';
