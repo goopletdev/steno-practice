@@ -44,10 +44,11 @@ class Input extends Set () {
 
 export class Keyboard {
     #ignoreChord = false;
+    onSend = new Set();
+    #down = new Set();
 
     constructor (keyMap = CONFIG.default.keymap) {
         this.input = new Input(keyMap);
-        this.down = new Set();
     }
 
     get output () {
@@ -58,7 +59,7 @@ export class Keyboard {
      * @param {KeyboardEvent} e
      */
     keydown (e) {
-        this.down.add(e.code);
+        this.#down.add(e.code);
         if (this.#ignoreChord) return;
         if (this.input.add(e.code)) {
             e.preventDefault();
@@ -71,8 +72,8 @@ export class Keyboard {
      * @param {KeyboardEvent} e
      */
     keyup (e) {
-        this.down.delete(e.code);
-        if (!this.down.size) {
+        this.#down.delete(e.code);
+        if (!this.#down.size) {
             return this.send();
         }
         return null;
@@ -82,6 +83,11 @@ export class Keyboard {
         let output = this.output; 
         this.#ignoreChord = false;
         this.input = new Input(this.input.keyMap);
+
+        for (const func of this.onSend) {
+            func(output);
+        }
+
         return output;
     }
 }
