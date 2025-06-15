@@ -13,6 +13,11 @@
     color: var(--paper-background);
 }
 
+.challenge-target {
+    background-color: var(--paper-background);
+    color: var(--paper-text-color);
+}
+
 #app {
     display: flex;
     flex-direction: row;

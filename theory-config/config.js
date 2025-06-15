@@ -52,7 +52,7 @@ export const CONFIG = {
             Minus: 0,
             Equal: 0,
         },
-        dictionaries: {},
+        dictionaries: [],
     },
     plover: {
         keymap: {
