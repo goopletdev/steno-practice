@@ -1,9 +1,9 @@
 // initializes document.searchParams w/ url options
-import '../../query-params/parse-raw.js'; 
-import { CONFIG } from '../../theory-config/config.js';
-import { StenoDictionary } from '../../steno-dictionary/steno-dict.js';
-import { Keyboard } from '../../steno-keyboard/steno-keyboard.js';
-import * as PRAC from '../../practice/get-practice-files.js';
+import '../query-params/parse-raw.js'; 
+import { CONFIG } from '../theory-config/config.js';
+import { StenoDictionary } from '../steno-dictionary/steno-dict.js';
+import { Keyboard } from '../steno-keyboard/steno-keyboard.js';
+import * as PRAC from '../practice/get-practice-files.js';
 
 const DICT = new StenoDictionary();
 DICT.fetchDicts(...CONFIG.lapwing.dictionaries);

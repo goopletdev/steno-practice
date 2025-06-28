@@ -18,6 +18,30 @@
     color: var(--paper-text-color);
 }
 
+.outline-1 {
+    outline: thick double;
+}
+
+.button {
+    width:fit-content;
+    min-width: 6em;
+    height: fit-content;
+    border: none;
+    font-size:x-large;
+}
+
+#content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #app {
     display: flex;
     flex-direction: row;

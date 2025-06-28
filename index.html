@@ -3,27 +3,34 @@
     <head>
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="./style.css">
+        <style>
+            #main {
+                max-height: 50vh;
+                max-width: 50vw;
+                margin-left: 25vw;
+                margin-right: 25vw;
+                margin-top: 25vh;
+                margin-bottom: 25vh;
+            }
+
+            #options-interface {
+                height: 100%;
+                position: absolute;
+                width: 100%;
+                overflow: hidden;
+            }
+        </style>
     </head>
     <body>
-        <div id="app" class="standard">
-            <div id="paper-tape-wrapper">
-                <pre id="paper-tape-title">STKPWHRAO*EUFRPBLGTSDZ</pre>
-                <div id="paper-tape" class="inverted">
-                    <div id="paper-tape-entries"></div>
+        <div id="options-interface" class="standard">
+            <div id="main" class="outline-1">
+                <div id="content-wrapper" class="center-content">
+                    <button class="button inverted" onclick="document.location='./practice-module'">
+                        Go
+                    </button>
                 </div>
-            </div>
 
-            <div id="main">
-                <!--img src="./lazy-keyboard.png"-->
-                <div id="output-wrapper"></div>
-                <div id="editor-wrapper">
-                    <div id="text-editor"></div>
-                    <div id="reference-text"></div>
-                </div>
             </div>
         </div>
-
-        <script type="module" src="./main.js"></script>
-
     </body>
 </html>
